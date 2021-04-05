@@ -1,22 +1,57 @@
-import React from 'react'
+import React, { Component } from 'react'
+import firebase from '../services/firebase'
+import { AuthContext } from '../providers/AuthContext'
+import { withRouter } from 'react-router'
+import { Redirect } from 'react-router-dom'
 
-function Login() {
-  return (
-    <div className="App">
+class Login extends Component {
+  static context = AuthContext 
+
+  state = {}
+
+  set = name => event => {
+    this.setState({
+      [name]: event.target.value
+    })
+  }
+
+  handleLogin = async event => {
+    const { email, password } = this.state
+    const { history } = this.props
+
+    event.preventDefault()
+    if (!email || !password) return alert('Please insert missing credentials!')
+
+    try {
+      await firebase.auth().signInWithEmailAndPassword(email, password)
+      history.push('/')
+    }
+    catch(err) {
+      alert("Failed to login!")
+      console.log(err)
+    }
+  }
+
+  render() {
+    const { currentUser } = this.context
+    if (!!currentUser) return <Redirect to="/" />
+
+    return (
+      <div className="App">
         <header className="App-header">
           <h1>Login</h1>
-          <form onSubmit="">
+          <form onSubmit={this.handleLogin}>
             <div className="form-control">
               <input
                 type="email"
-                // onChange={this.set('email')}
+                onChange={this.set('email')}
                 placeholder="Email"
               />
             </div>
             <div className="form-control">
               <input
                 type="password"
-                // onChange={this.set('password')}
+                onChange={this.set('password')}
                 placeholder="password"
               />
             </div>
@@ -26,7 +61,8 @@ function Login() {
           </form>
         </header>
       </div>
-  )
+    )
+  }
 }
 
-export default Login
+export default withRouter(Login)
