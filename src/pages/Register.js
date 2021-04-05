@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import firebase from '../services/firebase'
-// import { AuthContext } from '../providers/auth'
+import { AuthContext } from '../providers/AuthContext'
 import { withRouter } from 'react-router'
 import { Redirect } from 'react-router-dom'
 
 class Register extends Component {
-  // static contextType = AuthContext 
+  static context = AuthContext 
   state = {}
 
   set = name => event => {
@@ -19,7 +19,7 @@ class Register extends Component {
     const { history } = this.props
 
     event.preventDefault()
-    if (!email || !password) return alert("Email and Password Can't be empty")
+    if (!email || !password) return alert('Please insert missing credentials!')
 
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, password)
@@ -65,4 +65,4 @@ class Register extends Component {
   }
 }
 
-export default withRouter(Register) 
+export default withRouter(Register)
