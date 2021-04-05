@@ -3,7 +3,7 @@ import firebase from '../services/firebase'
 import { AuthContext } from '../providers/AuthContext'
 
 class Home extends Component {
-  static context = AuthContext
+  static contextType = AuthContext
 
   handleLogout = () => {
     firebase.auth().signOut()
@@ -18,14 +18,12 @@ class Home extends Component {
         <header className="App-header">
           {/* <img className="App-logo" alt="logo"/> */}
           <p>Welcome to React</p>
-          {/* Tombole Logout */}
-
           { !!currentUser && (
             <div>
               <button className="form-submit" onClick={this.handleLogout}>Logout</button>
             </div>
           )}
-        </header>
+        </header> 
       </div>
     )
   }

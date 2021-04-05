@@ -5,7 +5,7 @@ import { withRouter } from 'react-router'
 import { Redirect } from 'react-router-dom'
 
 class Register extends Component {
-  static context = AuthContext 
+  static contextType = AuthContext 
   state = {}
 
   set = name => event => {
