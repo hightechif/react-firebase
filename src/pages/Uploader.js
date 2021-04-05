@@ -15,7 +15,6 @@ export default class Uploader extends Component {
         file
       }
     })
-    console.log(this.state.file);
     const reader = new FileReader()
     reader.addEventListener('load', () => {
       this.setState({ image: reader.result })
