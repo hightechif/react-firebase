@@ -6,6 +6,7 @@ import Register from './pages/Register'
 import NotFound from './pages/NotFound'
 import Uploader from './pages/Uploader'
 import PostForm from './pages/Create'
+import GetData from './pages/Read'
 
 const Router = () => (
   <BrowserRouter>
@@ -15,6 +16,7 @@ const Router = () => (
       <Route exact path="/login" component={Login} />
       <Route exact path="/file-upload" component={Uploader} />
       <Route exact path="/create-post" component={PostForm} />
+      <Route exact path="/get-data" component={GetData} />
       <Route exact component={NotFound} />
     </Switch>
   </BrowserRouter>

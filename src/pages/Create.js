@@ -6,6 +6,8 @@ export default class PostForm extends Component {
   static contextType = AuthContext
   
   state ={
+    email: null,
+    name: null,
     value: null
   }
 
@@ -19,7 +21,7 @@ export default class PostForm extends Component {
     e.preventDefault()
     const {currentUser} = this.context
     const {history} = this.props
-    const {value} = this.state
+    const { email, name, value} = this.state
 
     if (!value) return alert("Please write something: ")
 
@@ -27,6 +29,8 @@ export default class PostForm extends Component {
 
     try {
       await firebase.database().ref(`posts/${Date.now()}`).set({
+        name,
+        email,
         text: value,
       })
       alert("Posted")
@@ -43,7 +47,13 @@ export default class PostForm extends Component {
           <h5>Write your story here</h5>
           <form onSubmit={this.handleSubmit}>
             <div className="form-control">
-              <textarea value={this.state.value} onChange={this.set('value')}></textarea>
+              <input type="email" value={this.state.email} onChange={this.set('email')} placeholder="email"/>
+            </div>
+            <div className="form-control">
+              <input type="text" value={this.state.name} onChange={this.set('name')} placeholder="name"/>
+            </div>
+            <div className="form-control">
+              <textarea value={this.state.value} onChange={this.set('value')}/>
             </div>
             <div className="form-control">
               <input type="submit" value="Post"/>
